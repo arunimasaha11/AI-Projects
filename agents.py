@@ -9,7 +9,10 @@ load_dotenv()
 
 # Model Setup
 
-llm = ChatOpenAI(model="gpt-4o-mini",temperature=0)
+llm = ChatOpenAI(model="gpt-4o-mini",temperature=0.8)
+# Separating LLM for the critic with higher temperature
+# temperature=0.7 → introduces variability so the critic scores honestly each time
+llm_critic = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 
 # First Agent
 
@@ -73,4 +76,4 @@ One line verdicts:
 ...""")
 ])
 
-critic_chain = critic_prompt | llm | StrOutputParser()
+critic_chain = critic_prompt | llm_critic | StrOutputParser()
